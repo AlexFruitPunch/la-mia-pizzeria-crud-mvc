@@ -52,7 +52,7 @@ namespace MammaMiaPizzaria.Controllers
                 return View("CreatePizza", nuovaPizza);
             }
 
-            Pizza nuovaPizzaConId = new Pizza(PizzaData.GetPizze().Count, nuovaPizza.Nome, nuovaPizza.Ingredienti, nuovaPizza.immagine, nuovaPizza.Prezzo);
+            Pizza nuovaPizzaConId = new Pizza(PizzaData.GetPizze().Count, nuovaPizza.Nome, nuovaPizza.Ingredienti, nuovaPizza.Immagine, nuovaPizza.Prezzo);
 
             PizzaData.GetPizze().Add(nuovaPizzaConId);
 

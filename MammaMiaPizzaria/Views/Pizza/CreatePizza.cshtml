@@ -4,16 +4,24 @@
 	<form method="post" action="@Url.Action("Create","Pizza")">
 	@Html.AntiForgeryToken()
 	<div class="mb-3">
-		<strong>immagine(url):</strong>
-		<input asp-for="immagine" class="d-block w-100" />
+		<strong>immagine(url) 1200x800-px:</strong>
+		<input asp-for="Immagine" class="d-block w-100" />
+		<span asp-validation-for="Immagine" class="text-danger"></span>
 	</div>
 	<div class="mb-3">
-		<strong>Nome:</strong>
+		<strong>Nome(Senza la parola "Pizza"):</strong>
 		<input asp-for="Nome" class="d-block w-100" />
+		<span asp-validation-for="Nome" class="text-danger"></span>
+	</div>
+	<div class="mb-3">
+		<strong>Prezzo:</strong>
+		<input asp-for="Prezzo" class="d-block w-100" />
+		<span asp-validation-for="Prezzo" class="text-danger"></span>
 	</div>
 	<div class="mb-3">
 		<strong>Ingredienti:</strong>
-		<input asp-for="Ingredienti" class="d-block w-100" />
+		<textarea class="form-control" input asp-for="Ingredienti" rows="3"></textarea>
+		<span asp-validation-for="Ingredienti" class="text-danger"></span>
 	</div>
 	<div class="text-end">
 		<input type="submit" class="btn btn-small btn-info mb-3" value="Salva">

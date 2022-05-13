@@ -9,7 +9,7 @@ namespace MammaMiaPizzaria.Utils
         public static List<Pizza> GetPizze()
         {
             //controllo che la lista di pizze non sia vuota
-            if (Pizze != null)
+            if (PizzaData.Pizze != null)
             {
                 return PizzaData.Pizze;
             }

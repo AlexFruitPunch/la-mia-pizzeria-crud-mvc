@@ -14,7 +14,7 @@ namespace MammaMiaPizzaria.Models
         [Required(ErrorMessage="Gli ingredienti della pizza sono obbligatori")]
         [PiuDiUnaParolaAttributoValidazione]
         public string? Ingredienti { get; set; }
-        public string? immagine { get; set; }
+        public string? Immagine { get; set; }
         public double Prezzo { get; set; }
 
         public Pizza() 
@@ -27,7 +27,7 @@ namespace MammaMiaPizzaria.Models
             this.id = id;
             this.Nome = Nome;
             this.Ingredienti = Ingredienti;
-            this.immagine = immagine;
+            this.Immagine = immagine;
             this.Prezzo = Prezzo;
         }
     }
