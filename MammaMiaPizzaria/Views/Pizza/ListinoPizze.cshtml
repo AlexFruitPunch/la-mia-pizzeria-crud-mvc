@@ -1,0 +1,45 @@
+﻿@model List<Pizza>
+         <!--Inizio contenitore Portfolio con immagini e bottoni-->
+
+        <div class="alert alert-warning alert-dismissible fade show text-center" role="alert">
+            <strong>Benvenuto!</strong> Se vuoi vedere nel dettaglio gli ingredienti premi sulle immagini delle pizze ;)
+        </div>
+        <br/>
+        <div class="container">
+
+            <!--Prima riga 3 immagini-->
+            <div class="row">
+
+        @if(Model.Count() == 0)
+        {
+            <h3>Non ci sono Pizze nell'elenco</h3>
+        }
+        else
+        {
+             int contatore = 0;
+            
+            @foreach (Pizza pizzaDellaLista in Model)
+            {
+                <div class="col">
+                    <div class="card shadow bg-body img-fluid h-100">
+                        <a href="@Url.Action("DettaglioPizza","Pizza", new{ id = pizzaDellaLista.id})"><img src="@pizzaDellaLista.immagine" class="card-img-top" alt="@pizzaDellaLista.Nome"></a>
+                        <div class="card-body fs-6 p-0">
+                            <h4 class="text-center my-3">@(pizzaDellaLista.id + 1) - @pizzaDellaLista.Nome</h4>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a href="#" class="btn btn-primary align-content-lg-center">Prezzo: € @pizzaDellaLista.Prezzo</a>
+                            <!-- <a href="Url.Action("DettaglioPizza","Pizza", new{ id = pizzaDellaLista.id})" class="btn btn-info align-content-lg-center">Prezzo: € pizzaDellaLista.Prezzo</a> -->
+                        </div>
+                    </div>
+                </div> 
+                contatore++;
+                
+                @if (contatore % 3 == 0)
+                {
+                    <div class="w-100"></div>
+                    <br/>
+                }
+            }
+        }
+            </div>          
+        </div>
