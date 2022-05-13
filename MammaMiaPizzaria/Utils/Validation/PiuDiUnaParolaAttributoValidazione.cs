@@ -8,7 +8,7 @@ namespace MammaMiaPizzaria.Utils.Validation
         {
             string fieldValue = (string)value;
 
-            if (fieldValue == null || fieldValue.Trim().IndexOf(" ") == false)
+            if (fieldValue == null || fieldValue.Trim().Contains(" ") == false)
             {
                 return new ValidationResult("il campo deve contenere almeno due parole");
             }

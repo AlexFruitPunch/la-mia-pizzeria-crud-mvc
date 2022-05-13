@@ -1,0 +1,22 @@
+﻿@model Pizza
+
+<div class="container">
+	<form method="post" action="@Url.Action("Create","Pizza")">
+	@Html.AntiForgeryToken()
+	<div class="mb-3">
+		<strong>immagine(url):</strong>
+		<input asp-for="immagine" class="d-block w-100" />
+	</div>
+	<div class="mb-3">
+		<strong>Nome:</strong>
+		<input asp-for="Nome" class="d-block w-100" />
+	</div>
+	<div class="mb-3">
+		<strong>Ingredienti:</strong>
+		<input asp-for="Ingredienti" class="d-block w-100" />
+	</div>
+	<div class="text-end">
+		<input type="submit" class="btn btn-small btn-info mb-3" value="Salva">
+	</div>
+	</form>
+</div>

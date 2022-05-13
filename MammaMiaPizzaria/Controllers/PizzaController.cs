@@ -40,7 +40,7 @@ namespace MammaMiaPizzaria.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            return View("FormPizza");
+            return View("CreatePizza");
         }
 
         [HttpPost]
@@ -49,7 +49,7 @@ namespace MammaMiaPizzaria.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View("FormPizza", nuovaPizza);
+                return View("CreatePizza", nuovaPizza);
             }
 
             Pizza nuovaPizzaConId = new Pizza(PizzaData.GetPizze().Count, nuovaPizza.Nome, nuovaPizza.Ingredienti, nuovaPizza.immagine, nuovaPizza.Prezzo);
