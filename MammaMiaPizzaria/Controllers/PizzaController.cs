@@ -97,7 +97,7 @@ namespace MammaMiaPizzaria.Controllers
         [HttpPost]
         public IActionResult Cancella(int id)
         {
-            int PizzaDaCancellare = -1;
+            int indicePizzaDaCancellare = -1;
 
             List<Pizza> pizzaList = PizzaData.GetPizze();
 
@@ -105,20 +105,19 @@ namespace MammaMiaPizzaria.Controllers
             {
                 if (pizzaList[i].Id == id)
                 {
-                    PizzaDaCancellare = i;
+                    indicePizzaDaCancellare = i;
                 }
             }
 
-            if(PizzaDaCancellare >= 0)
+            if(indicePizzaDaCancellare >= 0)
             {
-                PizzaData.GetPizze().RemoveAt(PizzaDaCancellare);
+                PizzaData.GetPizze().RemoveAt(indicePizzaDaCancellare);
                 return RedirectToAction("ListinoPizze");
             }
             else
             {
                 return NotFound();
             }
-              
         }
 
         private Pizza GetPizzaByid(int id)
