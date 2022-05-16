@@ -31,13 +31,13 @@
             {
                 <div class="col-4">
                     <div class="card shadow bg-body img-fluid h-100">
-                        <a href="@Url.Action("DettaglioPizza","Pizza", new{ id = pizzaDellaLista.id})"><img src="@pizzaDellaLista.Immagine" class="card-img-top" alt="@pizzaDellaLista.Nome"></a>
+                        <a href="@Url.Action("DettaglioPizza","Pizza", new{ id = pizzaDellaLista.Id})"><img src="@pizzaDellaLista.Immagine" class="card-img-top" alt="@pizzaDellaLista.Nome"></a>
                         <div class="card-body fs-6 p-0">
                             <h4 class="text-center my-3">@pizzaDellaLista.Nome</h4>
                             <p class="text-center"><strong>€ @pizzaDellaLista.Prezzo</strong></p>
                         </div>
                         <div class="card-footer text-center">
-                            <a href="#" class="btn btn-warning align-content-lg-center">Modifica</a>
+                            <a href=@Url.Action("Aggiorna", "Pizza", new{id = pizzaDellaLista.Id}) class="btn btn-warning align-content-lg-center">Modifica</a>
                             <a href="#" class="btn btn-danger align-content-lg-center">Cancella</a>
                             <!-- <a href="Url.Action("DettaglioPizza","Pizza", new{ id = pizzaDellaLista.id})" class="btn btn-info align-content-lg-center">Prezzo: € pizzaDellaLista.Prezzo</a> -->
                         </div>
