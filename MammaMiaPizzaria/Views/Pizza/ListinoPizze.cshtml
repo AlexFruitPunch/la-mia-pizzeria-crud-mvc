@@ -37,9 +37,11 @@
                             <p class="text-center"><strong>€ @pizzaDellaLista.Prezzo</strong></p>
                         </div>
                         <div class="card-footer text-center">
-                            <a href=@Url.Action("Aggiorna", "Pizza", new{id = pizzaDellaLista.Id}) class="btn btn-warning align-content-lg-center">Modifica</a>
-                            <a href="#" class="btn btn-danger align-content-lg-center">Cancella</a>
-                            <!-- <a href="Url.Action("DettaglioPizza","Pizza", new{ id = pizzaDellaLista.id})" class="btn btn-info align-content-lg-center">Prezzo: € pizzaDellaLista.Prezzo</a> -->
+                            <a href="@Url.Action("Aggiorna", "Pizza", new{id = pizzaDellaLista.Id})" class="btn btn-warning align-content-lg-center">Modifica</a>
+                            <form asp-controller="Post" asp-action="Cancella" asp-route-id="@pizzaDellaLista.Id" method="post">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" href="@Url.Action("Cancella", "Pizza", new{id = pizzaDellaLista.Id})" class="btn btn-danger align-content-lg-center mt-3">Cancella</button>
+                            </form>
                         </div>
                     </div>
                 </div> 

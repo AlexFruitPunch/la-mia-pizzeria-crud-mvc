@@ -15,7 +15,7 @@ namespace MammaMiaPizzaria.Controllers
         }
 
         [HttpGet]
-        public IActionResult DettaglioPizza([Required]int id)
+        public IActionResult DettaglioPizza(int id)
         {
             Pizza pizzaTrovata = GetPizzaByid(id);
 
@@ -53,7 +53,7 @@ namespace MammaMiaPizzaria.Controllers
         }
 
         [HttpGet]
-        public IActionResult Aggiorna([Required]int id)
+        public IActionResult Aggiorna(int id)
         {
             Pizza pizzaDaModificare = GetPizzaByid(id);
             if (pizzaDaModificare == null)
@@ -62,14 +62,14 @@ namespace MammaMiaPizzaria.Controllers
             }
             else
             {
-                return View("PizzaDaModificare");
+                return View("PizzaDaModificare",pizzaDaModificare);
             }
         }
 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Aggiorna([Required]int id, Pizza modello)
+        public IActionResult Aggiorna(int id, Pizza modello)
         {
             if (!ModelState.IsValid)
             {
@@ -94,7 +94,34 @@ namespace MammaMiaPizzaria.Controllers
             }
         }
 
-        private Pizza GetPizzaByid([Required]int id)
+        [HttpPost]
+        public IActionResult Cancella(int id)
+        {
+            int PizzaDaCancellare = -1;
+
+            List<Pizza> pizzaList = PizzaData.GetPizze();
+
+            for (int i = 0; i < pizzaList.Count; i++)
+            {
+                if (pizzaList[i].Id == id)
+                {
+                    PizzaDaCancellare = i;
+                }
+            }
+
+            if(PizzaDaCancellare >= 0)
+            {
+                PizzaData.GetPizze().RemoveAt(PizzaDaCancellare);
+                return RedirectToAction("ListinoPizze");
+            }
+            else
+            {
+                return NotFound();
+            }
+              
+        }
+
+        private Pizza GetPizzaByid(int id)
         {
             Pizza pizzaTrovata = null;
 
