@@ -34,8 +34,9 @@ namespace MammaMiaPizzaria.Models
             
         }
 
-        public Pizza(string Nome, string Ingredienti,string immagine, double Prezzo)
+        public Pizza(int id, string Nome, string Ingredienti,string immagine, double Prezzo)
         {
+            this.Id = id;
             this.Nome = Nome;
             this.Ingredienti = Ingredienti;
             this.Immagine = immagine;
