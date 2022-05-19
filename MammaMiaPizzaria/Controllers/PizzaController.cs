@@ -25,7 +25,14 @@ namespace MammaMiaPizzaria.Controllers
         [HttpGet]
         public IActionResult DettaglioPizza(int id)
         {
-            Pizza pizzaTrovata = GetPizzaByid(id);
+            Pizza pizzaTrovata = null;
+
+            using (PizzaContext db = new PizzaContext())
+            {
+                pizzaTrovata = db.Pizze
+                      .Where(Pizza => Pizza.Id == id)
+                      .First();
+            }
 
             if (pizzaTrovata != null)
             {
@@ -52,28 +59,38 @@ namespace MammaMiaPizzaria.Controllers
                 return View("CreatePizza", nuovaPizza);
             }
 
-            Pizza nuovaPizzaConId = new Pizza(PizzaData.GetPizze().Count, nuovaPizza.Nome, nuovaPizza.Ingredienti, nuovaPizza.Immagine, nuovaPizza.Prezzo);
+            using (PizzaContext db = new PizzaContext())
+            {
+                Pizza pizzaDaCreare = new Pizza(nuovaPizza.Nome, nuovaPizza.Ingredienti, nuovaPizza.Immagine, nuovaPizza.Prezzo);
 
-            //il mio modello è corretto
-            PizzaData.GetPizze().Add(nuovaPizzaConId);
+                db.Pizze.Add(pizzaDaCreare);
+                db.SaveChanges();
+            }
 
-            return RedirectToAction("ListinoPizze");
+                return RedirectToAction("ListinoPizze");
         }
 
         [HttpGet]
         public IActionResult Aggiorna(int id)
         {
-            Pizza pizzaDaModificare = GetPizzaByid(id);
+            Pizza pizzaDaModificare = null;
+
+            using (PizzaContext db = new PizzaContext())
+            {
+                pizzaDaModificare = db.Pizze
+                      .Where(Pizza => Pizza.Id == id)
+                      .First();
+            }
+
             if (pizzaDaModificare == null)
             {
                 return NotFound();
             }
             else
             {
-                return View("PizzaDaModificare",pizzaDaModificare);
+                return View("PizzaDaModificare", pizzaDaModificare);
             }
         }
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -84,63 +101,57 @@ namespace MammaMiaPizzaria.Controllers
                 return View("Aggiorna", modello);
             }
 
-            Pizza pizzaDaModificare = GetPizzaByid(id);
+            Pizza pizzaDaModificare = null;
 
-            if (pizzaDaModificare != null)
+            using (PizzaContext db = new PizzaContext())
             {
-                //aggiorniamo i campi con i nuovi valori
-                pizzaDaModificare.Nome = modello.Nome;
-                pizzaDaModificare.Ingredienti = modello.Ingredienti;
-                pizzaDaModificare.Immagine = modello.Immagine;
-                pizzaDaModificare.Prezzo = modello.Prezzo;
+                pizzaDaModificare = db.Pizze
+                      .Where(Pizza => Pizza.Id == id)
+                      .First();
 
-                return RedirectToAction("ListinoPizze");
-            }
-            else
-            {
-                return NotFound();
+                if (pizzaDaModificare != null)
+                {
+                    //aggiorniamo i campi con i nuovi valori
+                    pizzaDaModificare.Nome = modello.Nome;
+                    pizzaDaModificare.Ingredienti = modello.Ingredienti;
+                    pizzaDaModificare.Immagine = modello.Immagine;
+                    pizzaDaModificare.Prezzo = modello.Prezzo;
+
+                    db.SaveChanges();
+
+                    return RedirectToAction("ListinoPizze");
+                }
+                else
+                {
+                    return NotFound();
+                }
             }
         }
 
         [HttpPost]
         public IActionResult Cancella(int id)
         {
-            int indicePizzaDaCancellare = -1;
+            Pizza? pizzaDaCancellare = null;
 
-            List<Pizza> pizzaList = PizzaData.GetPizze();
-
-            for (int i = 0; i < pizzaList.Count; i++)
+            using (PizzaContext db = new PizzaContext())
             {
-                if (pizzaList[i].Id == id)
+                pizzaDaCancellare = db.Pizze
+                      .Where(Pizza => Pizza.Id == id)
+                      .FirstOrDefault();
+                if (pizzaDaCancellare != null)
                 {
-                    indicePizzaDaCancellare = i;
-                }
-            }
+                    db.Pizze.Remove(pizzaDaCancellare);
+                    db.SaveChanges();
 
-            if(indicePizzaDaCancellare >= 0)
-            {
-                PizzaData.GetPizze().RemoveAt(indicePizzaDaCancellare);
-                return RedirectToAction("ListinoPizze");
-            }
-            else
-            {
-                return NotFound();
+                    return RedirectToAction("ListinoPizze");
+                }
+                else
+                {
+                    return NotFound();
+                }
             }
         }
 
-        private Pizza GetPizzaByid(int id)
-        {
-            Pizza pizzaTrovata = null;
-
-            foreach (Pizza Pizza in PizzaData.GetPizze())
-            {
-                if (Pizza.Id == id)
-                {
-                    pizzaTrovata = Pizza;
-                    break;
-                }
-            }
-            return pizzaTrovata;
-        }
+        //ricordsi di fare un metodo di utilità per ricercare pizze nel database per non ripetere codice
     }
 }
