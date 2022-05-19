@@ -1,5 +1,5 @@
 ﻿@model List<Pizza>
-         <!--Inizio contenitore Portfolio con immagini e bottoni-->
+<!--Inizio contenitore Portfolio con immagini e bottoni-->
 
         <div class="alert alert-warning alert-dismissible fade show text-center" role="alert">
             <strong>Benvenuto!</strong> Se vuoi vedere nel dettaglio gli ingredienti premi sulle immagini delle pizze ;)
@@ -43,7 +43,7 @@
                             <a href="@Url.Action("Aggiorna", "Pizza", new{id = pizzaDellaLista.Id})" class="btn btn-warning align-content-lg-center">Modifica</a>
 
                             <!--Bottone per cancellare-->
-                            <form asp-controller="Post" asp-action="Cancella" asp-route-id="@pizzaDellaLista.Id" method="post">
+                            <form asp-controller="Pizza" asp-action="Cancella" asp-route-id="@pizzaDellaLista.Id" method="post">
                                 @Html.AntiForgeryToken()
                                 <button type="submit" class="btn btn-danger align-content-lg-center mt-3">Cancella</button>
                             </form>
