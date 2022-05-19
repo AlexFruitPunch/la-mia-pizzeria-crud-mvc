@@ -1,4 +1,5 @@
-﻿using MammaMiaPizzaria.Models;
+﻿using MammaMiaPizzaria.DataBase;
+using MammaMiaPizzaria.Models;
 using MammaMiaPizzaria.Utils;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
@@ -10,7 +11,14 @@ namespace MammaMiaPizzaria.Controllers
         [HttpGet]                                                                                            
         public IActionResult ListinoPizze()
         {
-            List<Pizza> Pizze = PizzaData.GetPizze();
+
+            List<Pizza> Pizze = new List<Pizza>();
+
+            using (PizzaContext db = new PizzaContext())
+            {
+                Pizze = db.Pizze.ToList<Pizza>();
+            }
+
             return View("ListinoPizze", Pizze);
         }
 
