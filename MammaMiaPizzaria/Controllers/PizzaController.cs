@@ -29,18 +29,24 @@ namespace MammaMiaPizzaria.Controllers
 
             using (PizzaContext db = new PizzaContext())
             {
-                pizzaTrovata = db.Pizze
-                      .Where(Pizza => Pizza.Id == id)
-                      .First();
-            }
+                try
+                {
 
-            if (pizzaTrovata != null)
-            {
-                return View("DettaglioPizza", pizzaTrovata);
-            }
-            else
-            {
-                return NotFound("il post con id" + id + "non è stato trovato");
+                    pizzaTrovata = db.Pizze
+                          .Where(Pizza => Pizza.Id == id)
+                          .First();
+
+                    return View("DettaglioPizza", pizzaTrovata);
+
+                }
+                catch (InvalidOperationException ex)
+                {
+                    return NotFound("il post con id " + id + " non è stato trovato");
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest();
+                }
             }
         }
 
@@ -77,9 +83,11 @@ namespace MammaMiaPizzaria.Controllers
 
             using (PizzaContext db = new PizzaContext())
             {
-                pizzaDaModificare = db.Pizze
-                      .Where(Pizza => Pizza.Id == id)
-                      .First();
+
+                //stesso modo di fare le query rispetto a prima ma usando le query classiche di SQL e non entity Framework
+                pizzaDaModificare = (from pizza in db.Pizze
+                                     where pizza.Id == id
+                                     select pizza).First();
             }
 
             if (pizzaDaModificare == null)
